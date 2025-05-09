@@ -1,4 +1,4 @@
-git clone https://github.com/koagonzalo11/repo.git
+git clone git@github.com:Elparadisogonzalo/assets.git 
 npm login
 npm install -g npm@11.2.0
 "engines": {
@@ -8,13 +8,15 @@ node -v
 npm -v
 rm -rf node_modules
 npm install
+npm pull
 npm install ipfs-core multiformats
 npm fund
 npm outdated
 npm update
 npm audit
+npm publish
 npm audit fix --force
-npm install <package>@latest
+npm install <web3.js>@latest
 npm install update latest
 Set-ExecutionPolicy Bypass -Scope Process -Force; `
 [System.Net.ServicePointManager]::SecurityProtocol = `
