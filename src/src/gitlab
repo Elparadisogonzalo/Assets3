@@ -1,5 +1,6 @@
-<<<<<<< Elparadisogonzalo
-.gitlab/agents/<elparadisogonzalo>/config.yaml
-=======
+<<<<<<< koagonzalo11-patch-1
 .gitlab/agents/elparadisogonzalo/config.yaml
->>>>>>> koagonzalo11-patch-1
+=======
+.gitlab/agents/<elparadisogonzalo>/config.yaml
+>>>>>>> Elparadisogonzalo
+
