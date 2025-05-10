@@ -1,12 +1,4 @@
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16569640454"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-16569640454');
-</script># 🚀 Asset3 Repository  
+   🚀 Asset Repository  
 
 ## 🌐 Project Overview  
 This repository is designed to interact with **Ethereum & Binance Smart Chain (BSC)** networks, utilizing Web3, GitHub CLI, Node.js, and Google Cloud CLI. It is linked to the **Unstoppable Domain**: `elparadisogonzalo.com`.  
@@ -56,8 +48,7 @@ curl "https://api.etherscan.io/api?module=account&action=balance&address=0x802ba
 🛠️ Running the Project
 
 To start the project:
-
-npm start
+automation and async
 
 📜 License
 
