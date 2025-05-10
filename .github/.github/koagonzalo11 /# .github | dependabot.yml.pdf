@@ -1,0 +1,131 @@
+from fpdf import FPDF
+
+# Define updated YAML content with an SSH script placeholder
+yaml_content = """
+version: 2
+updates:
+
+  # JavaScript / Node.js
+  - package-ecosystem: "npm"
+    directory: "/" # root folder
+    schedule:
+      interval: "daily"
+      day: everyday 
+      time: "10min"
+      timezone: "UTC"
+    open-pull-requests-limit: 10000
+    rebase-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "javascript"
+    ignore:
+      - dependency-name: "lodash"
+        versions: [">=5.0.0"]
+
+  # Python (pip)
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10000
+    rebase-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "python"
+    insecure-external-code: allow
+
+  # Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "hourly "
+    labels:
+      - "dependencies"
+      - "docker"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "hourly"
+    labels:
+      - "ci"
+      - "dependencies"
+
+  # Terraform
+  - package-ecosystem: "terraform"
+    directory: "/infrastructure/"
+    schedule:
+      interval: "hourly"
+    labels:
+      - "infrastructure"
+      - "dependencies"
+
+  # Git Submodules
+  - package-ecosystem: "submodules"
+    directory: "/"
+    schedule:
+      interval: "hourly"
+    labels:
+      - "submodules"
+
+  # .NET / NuGet
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "hourly"
+    labels:
+      - "dependencies"
+      - "dotnet"
+
+  # PHP / Composer
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "hourly"
+    labels:
+      - "dependencies"
+      - "php"
+
+  # Java / Kotlin (Gradle)
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "hourly"
+    labels:
+      - "dependencies"
+      - "java"
+
+  # Rust / Cargo
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "rust"
+
+# SSH Deployment Script (Example)
+# Save this separately or use as a GitHub Action post-update step
+#
+# ssh -i ~/.ssh/id_rsa user@yourserver.com << 'EOF'
+# cd /path/to/your/project
+# git pull origin main
+# docker-compose down && docker-compose up -d --build
+# EOF
+"""
+
+# Create PDF
+pdf = FPDF()
+pdf.set_auto_page_break(auto=True, margin=15)
+pdf.add_page()
+pdf.set_font("Courier", size=10)
+
+# Write the YAML and SSH content to the PDF
+for line in yaml_content.strip().split('\n'):
+    pdf.cell(200, 5, txt=line, ln=True)
+
+# Save PDF
+pdf_path = "/mnt/data/dependabot_config_with_ssh.pdf"
+pdf.output(pdf_path)
+pdf_path
