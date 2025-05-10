@@ -1,0 +1,148 @@
+# from fpdf import FPDF
+
+# Create a PDF document
+pdf = FPDF()
+pdf.set_auto_page_break(auto=True, margin=15)
+pdf.add_page()
+pdf.set_font("Courier", size=10)
+
+# Multi-line YAML content
+yaml_content = """
+version: 2
+updates:
+
+  # JavaScript / Node.js
+  - package-ecosystem: "npm"
+    directory: "/" # root folder
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    rebase-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "javascript"
+    ignore:
+      - dependency-name: "lodash"
+        versions: [">=5.0.0"]
+
+  # Python (pip)
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    rebase-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "python"
+    insecure-external-code: false
+
+  # Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "docker"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "ci"
+      - "dependencies"
+
+  # Terraform
+  - package-ecosystem: "terraform"
+    directory: "/infrastructure/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "infrastructure"
+      - "dependencies"
+
+  # Git Submodules
+  - package-ecosystem: "submodules"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "submodules"
+
+  # .NET / NuGet
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "dotnet"
+
+  # PHP / Composer
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "php"
+
+  # Java / Kotlin (Gradle)
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "java"
+
+  # Rust / Cargo
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "rust"
+"""
+
+# Add the YAML content line by line
+for line in yaml_content.strip().split('\n'):
+    pdf.cell(200, 5, txt=line, ln=True)
+
+# Save the PDF
+pdf_output_path = "/mnt/data/dependabot_config.pdf"
+pdf.output(pdf_output_path)
+pdf_output_path workflow warns and then closes issues and PRs that have had no activity for a specified amount of time.
+#
+# You can adjust the behavior by modifying this file.
+# For more information, see:
+# https://github.com/actions/stale
+name: Mark stale issues and pull requests
+
+on:
+  schedule:
+  - cron: '29 6 * * *'
+
+jobs:
+  stale:
+
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/stale@v5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        stale-issue-message: 'Stale issue message'
+        stale-pr-message: 'Stale pull request message'
+        stale-issue-label: 'no-issue-activity'
+        stale-pr-label: 'no-pr-activity'
